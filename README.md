@@ -1,5 +1,6 @@
 # KoganCodingChallenge
 Coding challenge for Kogan.com application by William Qoro.
+- Language: JavaScript
 
 # To Run
 1. run "git clone https://github.com/FultonSlide/WQKoganCodingChallenge.git" in the command line in the directory of your choice. 

@@ -28,7 +28,7 @@ const calcWeights = resolve => {
         let parcel = product.size;
         //I was unsure whether cubic weight of a product was simply dimensions multiplied together then multiplied with conversion of 250 as explained in the brief or if
         //it was dimensions multiplied then multiplied with conversion of 250 then added together with the specific products weight which was returned from the API
-        //so here I've follwed the brief's explanation and multiplied the products dimensions together then multiplied the result by the conversion factor of 250.
+        //so here I've followed the brief's explanation and multiplied the products dimensions together then multiplied the result by the conversion factor of 250.
         let dim = parcel.length/100 * parcel.height/100 * parcel.width/100;
         let cubicWeight = (dim * 250); //+ product.weight/1000;
         allProductsCubicWeight += cubicWeight;

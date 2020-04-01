@@ -16,29 +16,37 @@ body {
   justify-items: center;
 }
 
-h1 {
+body .msg {
   margin-top: 100px;
-  opacity: 0;
+  font-size: 3vmin;
+  visibility: hidden;
 }
 
-.packaging {
+body .packaging {
   margin-top: -110vh;
 }
 
-#Calc {
+body #Calc {
   visibility: hidden;
 }
 
-#avCubicWeight {
+body #avCubicWeight {
   visibility: hidden;
 }
 
-#Items {
-  position: relative;
-  opacity: 0;
+body .item {
+  visibility: hidden;
 }
 
-.item {
-  visibility: hidden;
+@media screen and (max-width: 600px) {
+  body .packaging {
+    margin-top: -230vmin;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  body .packaging {
+    margin-top: -290vmin;
+  }
 }
 /*# sourceMappingURL=main.css.map */

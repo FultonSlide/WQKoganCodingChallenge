@@ -1,66 +1,71 @@
-const button = document.querySelector('button');
+const cubicWeight = document.querySelector('#avCubicWeight');
 
-let tl = gsap.timeline({});
-let tlCalc = gsap.timeline({repeat:-1});
-let tl2 = gsap.timeline({repeat: -1});
 let master = gsap.timeline();
+let packingTL = gsap.timeline({});
+let calcTL = gsap.timeline({repeat:-1});
+let productsTL = gsap.timeline({repeat: -1});
+let weight = {val:0};
 
-const beginning = () => {
-    tl.from('#Ground', {x: '-400', duration: 1, opacity: 0, ease: "power2.out", delay: 0.8})
+//Intro animation of shipping package being packaged with coloured shapes
+const packing = () => {
+    packingTL.from('#Ground', {x: '-400', duration: 1, opacity: 0, ease: "power2.out", delay: 0.8})
       .from('#BackCircle1', {x: '800', duration: .4, opacity: 0, ease: "power2.out"}, "-=.7")
-      .from('#BackCircle2', {x: '-800', druation: .2, opacity: 0, ease: "power2.out"}, "-=.5")
+      .from('#BackCircle2', {x: '-800', duration: .2, opacity: 0, ease: "power2.out"}, "-=.5")
       .from('#Parcel', {y: '-800', duration: 0.8, opacity: 0, rotation: -20, transformOrigin: '50% 50%', ease: "bounce.out"})
       .from('#LidRight', {rotation: -195, duration: 0.8, transformOrigin: "0% 0%", opacity: 1, ease: "elastic.out(1, 0.75)"})
       .from('#LidLeft', {rotation: 200, duration: 0.8, transformOrigin: "100% 0%", opacity: 1, ease: "elastic.out(1, 0.75)"}, "-=.7")
-      .to('#Items', {autoAlpha: 1, duration: 0.8, ease: "power1.out"})
-      .to('.item', {autoAlpha: 1, duration: 0.8, ease: "power1.out"});
+      .to('.item', {autoAlpha: 1, duration: 1});
 }
 
-const middle = () => {
-    tlCalc.to("#Calc", {duration: 0.8, autoAlpha: 1, ease: "none"})
+//Average cubic weight calculation loading animation loop
+const calculating = () => {
+    calcTL.to("#Calc", {duration: 0.8, autoAlpha: 1, ease: "none"})
           .to("#Calc", {duration: 0.8, autoAlpha: 0, ease: "none"});
 }
 
-const end = () => {
-    tl2.set(".item", {y: (i) => i*350})
-   .to(".item", {
-        duration: 4,
-        ease: "none",
-        y: "+=1500",
-        modifiers: {
-            y: gsap.utils.unitize(y => parseFloat(y) % 1500)
-        }
-    });
+
+//Items filling the package animation loop
+const filling = () => {
+    productsTL.set(".item", {y: (i) => i*350})
+              .to(".item", {
+                duration: 4,
+                ease: "none",
+                y: "+=1500",
+                modifiers: {
+                    y: gsap.utils.unitize(y => parseFloat(y) % 1500)
+                }
+              });
 }
 
-master.add(beginning())
-      .add(middle(), "+=5")
-      .add(end(), ">");
-
-getProducts()
-    .then(() => {
-        endTimeline();
-    })
-    .catch(err => console.log(err));
-
-button.addEventListener('click', e => {
-    endTimeline();
-});
-
-const endTimeline = () => {
-    tl.to('#Items', {autoAlpha: 0, duration: 0.8, ease: "power1.out"})
-      .to('.item', {autoAlpha: 0, duration: 0.8, ease: "power1.out", onComplete: closeBox});
+//Updates the average cubic weight of AC products
+const updateHandler = () => {
+    cubicWeight.innerHTML = weight.val + 'Kg';
 }
 
-const closeBox = () => {
-    master.remove(tl2);
-    tl.to('#LidRight', {rotation: -215, duration: 0.8, transformOrigin: "0% 0%", opacity: 1, ease: "bounce.out"})
+//Wraps up the packing animation
+const endAnimation = (data) => {
+    packingTL.to('.item', {autoAlpha: 0, duration: 0.8, ease: "power1.out", onComplete: displayData, onCompleteParams:[data]});
+}
+
+//Wraps up animation and renders the average cubic weight of AC products to the DOM
+const displayData = (data) => {
+    master.remove(productsTL);
+    packingTL.to('#LidRight', {rotation: -215, duration: 0.8, transformOrigin: "0% 0%", opacity: 1, ease: "bounce.out"})
       .to('#LidLeft', {rotation: 215, duration: 0.8, transformOrigin: "100% 0%", opacity: 1, ease: "bounce.out"}, "-=.7")
-      .to('.msg', {duration: 0.7, autoAlpha: 0, ease: "power2.out"});
+      .to("#avCubicWeight", {duration: 3, autoAlpha: 1, scaleX: 1.6, scaleY: 1.6, ease: "elastic.out(1, 0.75)"})
+      .fromTo('.msg', {autoAlpha: 0, x: -1000}, {duration: 0.8, autoAlpha: 1, x: 0, ease: "power2.out"}, "-=3")
+      .to(weight, 3, {val:data, roundProps:"val", onUpdate:updateHandler, ease:Linear.easeNone}, "-=4");
 
-    tlCalc.to("#Calc", {duration: 0.8, autoAlpha: 0, ease: "none"}).repeat(0);
-
-    gsap.to("#avCubicWeight", {duration: 1.5, autoAlpha: 1, scaleX: 1.2, scaleY: 1.2, ease: "elastic.out(1, 0.75)", delay: 1});
+    calcTL.to("#Calc", {duration: 0.8, autoAlpha: 0, ease: "none"}).repeat(0);
 }
+
+//Master timeline with the 3 main animations added
+master.add(packing())
+      .add(calculating(), "+=5")
+      .add(filling(), ">");
+
+//Promise that resolves with the average cubic weight of AC products
+getWeight.then(data => endAnimation(data))
+         .catch(err => console.log(err));
 
 

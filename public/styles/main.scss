@@ -11,30 +11,38 @@ body {
     display: grid;
     align-items: center;
     justify-items: center;
-}
 
-h1 {
-    margin-top: 100px;
-    opacity: 0;
-}
+    .msg {
+        margin-top: 100px;
+        font-size: 3vmin;
+        visibility: hidden;
+    }
 
-.packaging {
-    margin-top: -110vh;
-}
+    .packaging {
+        margin-top: -110vh;
+    }
+    
+    #Calc {
+        visibility: hidden;
+    }
+    
+    #avCubicWeight {
+        visibility: hidden;
+    }
+    
+    .item {
+        visibility: hidden;
+    }
 
-#Calc {
-    visibility: hidden;
-}
+    @media screen and (max-width: 600px){
+        .packaging {
+            margin-top: -230vmin;
+        }
+    }
 
-#avCubicWeight {
-    visibility: hidden;
-}
-
-#Items {
-    position: relative;
-    opacity: 0;
-}
-
-.item {
-    visibility: hidden;
+    @media screen and (max-width: 350px){
+        .packaging {
+            margin-top: -290vmin;
+        }
+    }
 }

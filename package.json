@@ -1,0 +1,22 @@
+{
+  "name": "kogancodingchallenge",
+  "version": "1.0.0",
+  "description": "Coding challenge for Kogan.com FED position",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FultonSlide/KoganCodingChallenge.git"
+  },
+  "author": "William Qoro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FultonSlide/KoganCodingChallenge/issues"
+  },
+  "homepage": "https://github.com/FultonSlide/KoganCodingChallenge#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

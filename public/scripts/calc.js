@@ -42,7 +42,5 @@ async function calcWeights(resolve, reject){
 
 //A promise that resolves when its calculated the average Cubic Weight of all the ac products returned from the API
 let getWeight = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        getProducts(resolve, reject);
-    }, 10000);
+    getProducts(resolve, reject);
 });

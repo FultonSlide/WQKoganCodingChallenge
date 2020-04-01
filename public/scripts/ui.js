@@ -54,7 +54,7 @@ const displayData = (data) => {
       .to('#LidLeft', {rotation: 215, duration: 0.8, transformOrigin: "100% 0%", opacity: 1, ease: "bounce.out"}, "-=.7")
       .to("#avCubicWeight", {duration: 3, autoAlpha: 1, scaleX: 1.6, scaleY: 1.6, ease: "elastic.out(1, 0.75)"})
       .fromTo('.msg', {autoAlpha: 0, x: -1000}, {duration: 0.8, autoAlpha: 1, x: 0, ease: "power2.out"}, "-=3")
-      .to(weight, 3, {val:data, roundProps:"val", onUpdate:updateHandler, ease:Linear.easeNone}, "-=4");
+      .to(weight, 2, {val:data, roundProps:"val", onUpdate:updateHandler, ease:Linear.easeNone}, "-=4");
 
     calcTL.to("#Calc", {duration: 0.8, autoAlpha: 0, ease: "none"}).repeat(0);
 }
